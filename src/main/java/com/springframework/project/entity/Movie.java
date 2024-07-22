@@ -42,7 +42,6 @@ public class Movie {
 	private Set<String> movieCast; // On DB level we create new table for this with foreign key movieId
 	
 	@Column(nullable= false)
-	@NotBlank(message= "Please provide movie's release year")
 	private Integer releaseYear;
 	
 	@Column(nullable= false)

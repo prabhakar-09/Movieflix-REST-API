@@ -11,5 +11,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true  # Corrected property name from format-sql to format_sql
+        format_sql: true  
 
+project:
+  poster: posters/
