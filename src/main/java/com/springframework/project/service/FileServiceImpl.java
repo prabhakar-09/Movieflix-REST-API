@@ -12,7 +12,11 @@ import java.nio.file.StandardCopyOption;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import ch.qos.logback.classic.Logger;
+import lombok.extern.java.Log;
+
 @Service
+@Log
 public class FileServiceImpl implements FileService{
 
 	@Override
@@ -41,6 +45,8 @@ public class FileServiceImpl implements FileService{
 	public InputStream getResourceFile(String path, String fileName) throws FileNotFoundException {
 		
 		String filePath = path + File.separator + fileName;
+		
+		log.info(filePath);
 		
 		return new FileInputStream(filePath); // 
 	}
