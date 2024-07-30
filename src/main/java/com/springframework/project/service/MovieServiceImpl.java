@@ -1,7 +1,8 @@
 package com.springframework.project.service;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
+//import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -80,16 +81,60 @@ public class MovieServiceImpl implements MovieService{
 		return response;
 	}
 
+//	Getting movie with the ID
 	@Override
 	public MovieDto getMovie(Integer movieId) {
-		// TODO Auto-generated method stub
-		return null;
+//		Check if the data exists in the DB with given ID & fetch it.
+		
+		Movie movie = movieRepository.findById(movieId).orElseThrow(()-> new RuntimeException("Movie not found."));		
+		
+//		Generate poster url 
+		String posterUrl = baseUrl + "/file/"+ movie.getPoster();
+		
+//		Map to movie DTO object & return 
+		MovieDto response = new MovieDto(
+				
+				movie.getMovieId(),
+				movie.getTitle(),
+				movie.getDirector(),
+				movie.getStudio(),				
+				movie.getMovieCast(),
+				movie.getReleaseYear(),
+				movie.getPoster(),
+				posterUrl
+		);
+		return response;
 	}
 
 	@Override
 	public List<MovieDto> getAllMovies() {
-		// TODO Auto-generated method stub
-		return null;
+//		Fetch all the data 
+		List<Movie> movies = movieRepository.findAll();
+		
+		List<MovieDto> movieDtos = new ArrayList<>();
+		
+//		Iterate through list & generate the poster url & map it to DTO
+		
+		for(Movie movie : movies) {
+			
+			String posterUrl = baseUrl + "/file/"+ movie.getPoster();
+			
+			MovieDto response = new MovieDto(
+					
+					movie.getMovieId(),
+					movie.getTitle(),
+					movie.getDirector(),
+					movie.getStudio(),				
+					movie.getMovieCast(),
+					movie.getReleaseYear(),
+					movie.getPoster(),
+					posterUrl
+			);
+			
+			movieDtos.add(response);
+		}
+		
+		return movieDtos;
 	}
 
 }
