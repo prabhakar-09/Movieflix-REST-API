@@ -1,6 +1,9 @@
 package com.springframework.project.service;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 //import java.util.List;
 
@@ -34,6 +37,11 @@ public class MovieServiceImpl implements MovieService{
 	@Override
 	public MovieDto addMovie(MovieDto movieDto, MultipartFile file) throws IOException {
 		
+		if(Files.exists(Paths.get(path + File.separator + file.getOriginalFilename()))) {
+			
+			throw new RuntimeException("File with same name already exists");
+		}
+		
 //		Uploading the file 
 		
 		String uploadedFileName = fileService.uploadFile(path, file);
@@ -46,7 +54,7 @@ public class MovieServiceImpl implements MovieService{
 		
 		Movie movie = new Movie(
 				
-				movieDto.getMovieId(),
+				null,
 				movieDto.getTitle(),
 				movieDto.getDirector(),
 				movieDto.getStudio(),
@@ -135,6 +143,18 @@ public class MovieServiceImpl implements MovieService{
 		}
 		
 		return movieDtos;
+	}
+
+	@Override
+	public MovieDto updateMovie(Integer movieId, MovieDto movieDto, MultipartFile file) throws IOException {
+		
+		return null;
+	}
+
+	@Override
+	public String deleteMovie(Integer movieId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
